@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import orderBy from 'lodash/orderBy';
+import { useTranslation } from 'react-i18next';
 
 import Section from '../Components/Section';
 
@@ -14,6 +15,7 @@ export default function HomePage() {
 	const [latestTag, setLatestTag] = useState('');
 	const [currentVersion, setCurrentVersion] = useState(process.env.REACT_APP_CURRENT_VERSION);
 	const [memoryReport, setMemoryReport] = useState(null);
+	const { t, i18n } = useTranslation('translation', {keyPrefix: 'homePage'});
 
 	useEffect(() => {
 		WebApi.getFirmwareVersion().then(response => {
@@ -47,13 +49,17 @@ export default function HomePage() {
 
 	return (
 		<div>
-			<h1>Welcome to the GP2040-CE Web Configurator!</h1>
-			<p>Please select a menu option to proceed.</p>
+			<h1>Translation Demo with fallback!</h1>
+			<button onClick={() => i18n.changeLanguage('en')}>English</button>
+			<button onClick={() => i18n.changeLanguage('sv')}>Svenska</button>
+
+			<h1>{t('title')}</h1>
+			<p>{t('subTitle')}</p>
 			<Section title="System Stats">
 				<div>
-					<div><strong>Version</strong></div>
-					<div>Current: { currentVersion }</div>
-					<div>Latest: { latestVersion }</div>
+					<div><strong>{t('version')}</strong></div>
+					<div>{t('currentVersion', { currentVersion })}</div>
+					<div>{t('latestVersion', { latestVersion })}</div>
 					{(latestVersion && currentVersion !== latestVersion) &&
 						<div className="mt-3 mb-3">
 							<a
@@ -61,15 +67,15 @@ export default function HomePage() {
 								rel="noreferrer"
 								href={`https://github.com/OpenStickCommunity/GP2040-CE/releases/tag/${latestTag}`}
 								className="btn btn-primary"
-							>Get Latest Version</a>
+							>{t('getLatestVersion')}</a>
 						</div>
 					}
 					{memoryReport &&
 						<div>
-							<strong>Memory (KB)</strong>
-							<div>Flash: {memoryReport.usedFlash} / {memoryReport.totalFlash} ({memoryReport.percentageFlash}%)</div>
-							<div>Heap: {memoryReport.usedHeap} / {memoryReport.totalHeap} ({memoryReport.percentageHeap}%)</div>
-							<div>Static Allocations: {memoryReport.staticAllocs}</div>
+							<strong>{t('memory')}</strong>
+							<div>{t('flash', {used: memoryReport.usedFlash, total: memoryReport.usedFlash, percentage: memoryReport.percentageFlash})}</div>
+							<div>{t('heap', {used: memoryReport.usedHeap, total: memoryReport.totalHeap, percentage: memoryReport.percentageHeap})}</div>
+							<div>{t('allocs', {value: memoryReport.staticAllocs})}</div>
 						</div>
 					}
 				</div>

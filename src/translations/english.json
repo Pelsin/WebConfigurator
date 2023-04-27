@@ -1,0 +1,14 @@
+{
+	"homePage": {
+		"title": "Welcome to the GP2040-CE Web Configurator!",
+		"subTitle": "Please select a menu option to proceed.",
+		"version": "Version",
+		"currentVersion": "Current: {{currentVersion}}",
+		"latestVersion": "Latest: {{latestVersion}}",
+		"getLatestVersion": "Get Latest Version",
+		"memory": "Memory (KB)",
+		"flash": "Flash: {{used}} / {{total}} ({{percentage}}%)",
+		"heap": "Heap: {{used}} / {{total}} ({{percentage}}%)",
+		"allocs": "Static Allocations: {{value}}"
+	}
+}

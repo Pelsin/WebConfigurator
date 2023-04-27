@@ -1,0 +1,11 @@
+{
+	"homePage": {
+		"title": "Välkommen till GP2040-CE Web Configurator!",
+		"subTitle": "Välj ett menyalternativ för att fortsätta.",
+		"version": "Version",
+		"memory": "Minne (KB)",
+		"flash": "Flash: {{used}} / {{total}} ({{percentage}}%)",
+		"heap": "Heap: {{used}} / {{total}} ({{percentage}}%)",
+		"allocs": "Statiska tilldelningar: {{value}}"
+	}
+}
