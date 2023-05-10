@@ -31,9 +31,14 @@ const rgbArrayToHex = (values) => {
 	return `#${intToHex(r)}${intToHex(g)}${intToHex(b)}`;
 };
 
+const percentage = (x = 0, y = 0) => (x / y * 100).toFixed(2)
+const toKB = (x = 0) => parseFloat((x / 1024).toFixed(2))
+
 export {
-	intToHex,
 	hexToInt,
+	intToHex,
+	percentage,
 	rgbArrayToHex,
 	rgbIntToHex,
+	toKB
 };
