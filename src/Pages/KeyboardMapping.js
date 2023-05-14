@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useStateContext } from '../Contexts/State';
 import { AppContext } from '../Contexts/AppContext';
 import FormSelect from '../Components/FormSelect';
 import Section from '../Components/Section';
-import WebApi, { baseButtonMappings } from '../Services/WebApi';
+import WebApi from '../Services/WebApi';
 import boards from '../Data/Boards.json';
 import BUTTONS from '../Data/Buttons.json';
 import './PinMappings.scss';
@@ -95,31 +95,24 @@ const KEY_CODES = [
 	{ label: "Space", value: 0x2c },
 	{ label: "Tab", value: 0x2b }
 ];
+const selectedBoard = process.env.REACT_APP_GP2040_BOARD;
 
 export default function KeyboardMappingPage() {
 	const { buttonLabels } = useContext(AppContext);
+	const {keyMappings: remoteKeyMappings} = useStateContext()
+
+	const [keyMappings, setKeyMappings] = useState(remoteKeyMappings)
 	const [validated, setValidated] = useState(false);
 	const [saveMessage, setSaveMessage] = useState('');
-	const [keyMappings, setKeyMappings] = useState(baseButtonMappings);
-	const [selectedController] = useState(process.env.REACT_APP_GP2040_CONTROLLER);
-	const [selectedBoard] = useState(process.env.REACT_APP_GP2040_BOARD);
-
-	useEffect(() => {
-		async function fetchData() {
-			setKeyMappings(await WebApi.getKeyMappings());
-		}
-
-		fetchData();
-	}, [setKeyMappings, selectedController]);
 
 	const handleKeyChange = (e, prop) => {
-		const newMappings = {...keyMappings};
-		if (e.target.value)
-			newMappings[prop].key = parseInt(e.target.value);
-		else
-			newMappings[prop].key = '';
-
-		validateMappings(newMappings);
+			validateMappings({
+				...keyMappings,
+				[prop]: {
+					...keyMappings[prop],
+					key: e.target.value ? parseInt(e.target.value) : '',
+				},
+			});
 	};
 
 	const handleSubmit = async (e) => {

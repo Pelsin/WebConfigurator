@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { intToHex, hexToInt, rgbIntToHex } from './Utilities';
+import { hexToInt, rgbIntToHex } from './Utilities';
 
 const baseUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080';
 
@@ -207,7 +207,6 @@ async function getKeyMappings() {
 
 			return mappings;
 		})
-		.catch(console.error);
 }
 
 async function setKeyMappings(mappings) {
